@@ -1,0 +1,17 @@
+{
+    "UserName":"lce",
+    "OutputFile":"single_link_failure_result_data.pkl",
+    "SaveTraceFile":"True",
+    "FailureMode":"single",
+    "Algorithm":["SDFFR_MP","SDFFR_MP_LB"],
+    "Vertex":[20],
+    "Edge":[35],
+    "LinkBandwidth":[1000],
+    "Throughput":[10],
+    "TrafficModel":[1],
+    "ControlPlaneDelay":[20],
+    "FlowCount":[30],
+    "Trial":[1,2],
+    "LinkChangeTime":[5],
+    "Metric":["Throughput","TOTALPacketLoss","PacketLoss","RecoveryDelay"]
+}
