@@ -91,15 +91,15 @@ python3 main.py clean configuration1
 - `Mode`: 遮擋模式 (markov/fixed)
 - `Algorithm`: 測試的演算法列表
 - `Vertex`: 節點數量
-- `Edge`: 連結數量
+- `Edge`: 鏈路數量
 - `LinkBandwidth`: 連結頻寬
 - `Throughput`: 流量吞吐量
 - `TrafficModel`: 流量模型
 - `ControlPlaneDelay`: 控制平面延遲
 - `FlowCount`: 流數量
 - `Trial`: 實驗次數範圍
-- `LinkChangeTime`: 連結變動時間間隔
-- `Metric`: 評估指標
+- `LinkChangeTime`: 鏈路變動時間間隔
+- `Metric`: 評估用指標
 
 ## 實驗流程
 
@@ -108,16 +108,7 @@ python3 main.py clean configuration1
 3. **演算法部署**：在 ONOS 控制器上部署故障恢復演算法
 4. **流量產生**：使用 iperf 產生測試流量
 5. **故障注入**：模擬連結故障與恢復
-6. **資料收集**：收集效能指標與日誌
+6. **資料收集**：收集與紀錄
 7. **結果分析**：分析實驗結果並儲存
 
-## 注意事項
-
-1. 請確保已安裝 Mininet、ONOS 及其他相依套件
-2. 執行時需有 sudo 權限
-3. 請確認網路環境已正確設定
-4. 實驗前請備份重要資料
-
-## 代辦清單
-1. ONOS GUI 沒有看到節點加入，演算法沒有順利執行
-2. 沒有產出 log 檔
+目前程式只能完成第1.2項
