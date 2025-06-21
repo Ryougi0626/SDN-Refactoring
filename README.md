@@ -1,14 +1,10 @@
-# SDN 故障恢復實驗框架
-
-這是一個模組化的 SDN 故障恢復實驗框架，用於測試與比較不同的故障恢復演算法。
-
 ## 專案結構
 
 ```
 test/
 ├── main.py                   # 主程式進入點
 ├── config/                   # 設定檔目錄
-│   └── configuration.json   # 範例設定檔
+│   └── configuration.json    # 範例設定檔
 ├── src/                      # 原始碼目錄
 │   ├── experiment.py         # 實驗執行器
 │   ├── logger.py             # 日誌管理模組
