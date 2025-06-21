@@ -1,5 +1,7 @@
 ## 專案結構
 
+實驗細節請參照御楷碩論程式碼手冊，此專案只基於原版程式碼重構。
+
 ```
 test/
 ├── main.py                   # 主程式進入點
@@ -89,14 +91,14 @@ python3 main.py clean configuration1
 - `UserName`: 使用者名稱
 - `FailureMode`: 故障模式（single/multiple）
 - `Mode`: 遮擋模式 (markov/fixed)
-- `Algorithm`: 測試的演算法列表
-- `Vertex`: 節點數量
-- `Edge`: 鏈路數量
+- `Algorithm`: 測試的演算法 ("LB","MP","MP_LB","DRAF" )
+- `Vertex`: 鏈路中 ovs 的數量
+- `Edge`: 鏈路中連結各 ovs 的邊總數
 - `LinkBandwidth`: 連結頻寬
-- `Throughput`: 流量吞吐量
-- `TrafficModel`: 流量模型
-- `ControlPlaneDelay`: 控制平面延遲
-- `FlowCount`: 流數量
+- `Throughput`: 每條flow的吞吐量設定
+- `TrafficModel`: 每條flow的吞吐量設定，1 == TCP 2 == UDP
+- `ControlPlaneDelay`: 模擬 ovs 與 onos 之間的延遲
+- `FlowCount`: 預期加入拓樸的 flow 總數
 - `Trial`: 實驗次數範圍
 - `LinkChangeTime`: 鏈路變動時間間隔
 - `Metric`: 評估用指標
