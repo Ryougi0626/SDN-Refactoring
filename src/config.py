@@ -13,18 +13,15 @@ from requests.auth import HTTPBasicAuth
 
 
 class ConfigManager:
-    """Configuration manager"""
-    
+
     def __init__(self, username):
         self.username = username
     
     def read_config_file(self, config_file_name):
-        """Read configuration file"""
         with open(config_file_name, 'r') as load_f:
             return json.load(load_f)
     
-    def build_folder(self, folder, check=False):
-        """Create folder"""
+    def build_folder(self, folder, check):
         if check:
             if os.path.isdir(folder):
                 os.system('sudo rm -r ' + folder)
@@ -38,7 +35,6 @@ class ConfigManager:
             return folder
     
     def build_pickle(self, file, data, check_file_exist=False):
-        """Create pickle file"""
         if check_file_exist:
             if not os.path.isfile(file):
                 pickle.dump(data, open(file, 'wb'))
@@ -48,13 +44,11 @@ class ConfigManager:
         return file
     
     def build_json(self, file, data):
-        """Create JSON file"""
         with open(file, 'w') as f:
             json.dump(data, f)
         os.system('sudo chown -R ' + self.username + ' ' + file)
     
     def build_text(self, text_name, data, element=True, valid_element=[True], operation='a'):
-        """Create text file"""
         if element in valid_element:
             with open(text_name, operation) as f:
                 f.write(data)
@@ -62,24 +56,20 @@ class ConfigManager:
             os.system('sudo chown -R ' + self.username + ' ' + text_name)
     
     def build_log_file(self, log_file):
-        """Create log file"""
         with open(log_file, 'w') as f:
             f.truncate()
         os.system('sudo chown -R ' + self.username + ' ' + log_file)
         return log_file
     
     def read_output_file(self, file):
-        """Read output file"""
         with open(file, 'rb') as f:
             return pickle.load(f)
 
 
 class ONOSConfig:
-    """ONOS controller configuration"""
-    
+
     @staticmethod
     def configure_onos():
-        """Configure ONOS controller"""
         base_url = "http://localhost:8181/onos/v1"
         username = "onos"
         password = "rocks"
@@ -103,7 +93,6 @@ class ONOSConfig:
     
     @staticmethod
     def reset_onos():
-        """Reset ONOS controller"""
         script_path = os.path.expanduser('~/yukai_thesis/reset_onos/reset_onos.py')
         subprocess.Popen(['sudo', 'python3', script_path])
         time.sleep(30)
@@ -119,23 +108,22 @@ class ONOSConfig:
 
 
 class SystemManager:
-    """System management"""
-    
+
     @staticmethod
     def kill_process(cmd):
-        """Kill process"""
+
         os.system('sudo python3 pid_kill.py ' + cmd)
     
     @staticmethod
     def kill_ovs_pid():
-        """Kill OVS process"""
+
         os.system('sudo rmmod openvswitch')
         os.system('sudo killall ovsdb-server')
         os.system('sudo killall ovs-vswitchd')
     
     @staticmethod
     def setup_ovs_pid():
-        """Setup OVS process"""
+
         os.system('sudo modprobe gre')
         os.system('sudo modprobe openvswitch')
         os.system('sudo modprobe libcrc32c')
@@ -148,7 +136,7 @@ class SystemManager:
     
     @staticmethod
     def reset_all():
-        """Reset all systems"""
+
         os.system('sudo mn -c')
         time.sleep(5)
         SystemManager.kill_ovs_pid()
@@ -159,7 +147,7 @@ class SystemManager:
     
     @staticmethod
     def control_plane_delay_setup(control_plane_delay, action):
-        """Setup control plane delay"""
+
         if action == 'add':
             os.system('sudo tc qdisc add dev lo root netem delay ' + str(control_plane_delay) + 'ms')
         elif action == 'delete':

@@ -11,8 +11,7 @@ import numpy as np
 
 
 class FailureManager:
-    """Failure manager"""
-    
+
     def __init__(self, logger, config_manager):
         self.logger = logger
         self.config_manager = config_manager

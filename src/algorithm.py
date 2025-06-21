@@ -9,13 +9,11 @@ from .config import ONOSConfig
 
 
 class AlgorithmManager:
-    """Algorithm manager"""
     
     def __init__(self, logger):
         self.logger = logger
     
     def setup_algorithm(self, algorithm):
-        """Setup algorithm"""
         if algorithm == 'LB':
             self.logger.log("Perform LB algorithm")
             os.system('sudo curl -X POST -H Content-Type:application/octet-stream http://127.0.0.1:8181/onos/v1/applications --data-binary @/home/lce/onos/apps/LP/target/LP-1.0-SNAPSHOT.oar --user onos:rocks')
@@ -62,15 +60,13 @@ class AlgorithmManager:
             ONOSConfig.configure_onos()
             self.logger.log('\n')
         
-        # Wait for algorithm configuration to complete
         while True and algorithm == 'SDFFR':
             time.sleep(1)
             self.logger.log('Check if the configuration of the algorithm is completed')
             if os.path.isfile('./config_done'):
                 os.remove('./config_done')
                 break
-        
-        # Wait for algorithm to be ready
+
         while True:
             time.sleep(1)
             self.logger.log('Check if the algorithm is ready')
@@ -80,5 +76,4 @@ class AlgorithmManager:
                 return False
     
     def close_algorithm(self):
-        """Close algorithm"""
         os.system('curl -X DELETE --header "Accept: application/json" "http://localhost:8181/onos/v1/applications/org.foo.app" --user onos:rocks') 

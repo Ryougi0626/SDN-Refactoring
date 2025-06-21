@@ -4,6 +4,7 @@
     "SaveTraceFile":"True",
     "FailureMode":"single",
     "Algorithm":["SDFFR_MP","SDFFR_MP_LB"],
+    "Mode": "fixed", 
     "Vertex":[20],
     "Edge":[35],
     "LinkBandwidth":[1000],

@@ -11,7 +11,6 @@ from threading import Thread, Event
 
 
 class TrafficManager:
-    """Traffic manager"""
     
     def __init__(self, logger, config_manager):
         self.logger = logger
@@ -90,7 +89,7 @@ class TrafficManager:
         self.logger.log_traffic_flow(index, src_host, dst_host)
         self.logger.log(f'here!!!!,src:{src_host.IP()} ,dst:{dst_host.IP()}, cmd:{" ".join(cmd)}')
     
-    def setup_traffic_flows(self, traffic_flows, host_map, trace_folder, label, traffic_model, throughput, start_event, mode='markov'):
+    def setup_traffic_flows(self, traffic_flows, host_map, trace_folder, label, traffic_model, throughput, start_event, mode, affected_traffic_flows):
         """Setup traffic flows"""
         thread_manager = []
         
@@ -124,7 +123,7 @@ class TrafficManager:
             use_port = self.BASE_PORT + idx
             
             # Non-affected traffic flows
-            if (src_host, dst_host) not in getattr(self, 'affected_traffic_flows', []):
+            if (src_host, dst_host) not in affected_traffic_flows:
                 cmd = "iperf3 -s -p " + str(use_port)
                 iperf_server_thread = Thread(target=self.iperf_server_1, args=(host_map[dst_host], cmd))
                 iperf_server_thread.setDaemon(True)

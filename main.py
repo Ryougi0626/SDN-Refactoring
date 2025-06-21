@@ -19,14 +19,10 @@ def main():
     args = parser.parse_args()
     
     try:
-        # Read config file first to get username
         with open(args.config_file + '.json', 'r') as f:
             import json
             cfg_file = json.load(f)
         
-        config_manager = ConfigManager(cfg_file['UserName'])
-        
-        # Create experiment runner
         experiment_runner = ExperimentRunner(args.config_file + '.json', cfg_file['UserName'])
         
         if args.mode == 'run':

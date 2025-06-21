@@ -24,6 +24,7 @@ class TopologyManager:
     def __init__(self, logger):
         self.logger = logger
     
+    ## note: no reference to this function in the original code, but keeping it for completeness
     def read_topo_file(self, file_name):
         """Read topology from SNDlib file"""
         file_name = './SNDlib/' + file_name
@@ -55,6 +56,7 @@ class TopologyManager:
         raw_vertex_data = sorted(list(raw_vertex_data.values()))
         return raw_edge_data, raw_vertex_data, file_name
     
+    ## note: no reference to this function in the original code, but keeping it for completeness
     def create_topo(self, edge, vertex):
         """Create topology"""
         raw_edge_data = []
@@ -82,11 +84,9 @@ class TopologyManager:
         return raw_edge_data, raw_vertex_data
     
     def add_switch(self, net, switch_name):
-        """Add switch"""
         net.addSwitch(switch_name)
     
     def add_host(self, net, host_name, host_ip):
-        """Add host"""
         net.addHost(host_name, ip=host_ip)
     
     def build_topo(self, edge_set, vertex_set, flow_count, link_bandwidth):

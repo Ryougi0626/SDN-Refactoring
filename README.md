@@ -1,67 +1,60 @@
-# SDN Failure Recovery Experiment Framework
+# SDN 故障恢復實驗框架
 
-This is a modular SDN failure recovery experiment framework for testing and comparing different failure recovery algorithms.
+這是一個模組化的 SDN 故障恢復實驗框架，用於測試與比較不同的故障恢復演算法。
 
-## Project Structure
+## 專案結構
 
 ```
 test/
-├── main.py                   # Main program entry
-├── config/                   # Configuration directory
-│   ├── config.py             # Configuration management module
-│   └── configuration1.json   # Example configuration file
-├── src/                      # Source code directory
-│   ├── experiment.py         # Experiment runner
-│   ├── logger.py             # Log management module
-│   ├── topology.py           # Topology management module
-│   ├── algorithm.py          # Algorithm management module
-│   ├── traffic.py            # Traffic management module
-│   └── failure.py            # Failure management module
-└── README.md                 # Documentation
+├── main.py                   # 主程式進入點
+├── config/                   # 設定檔目錄
+│   └── configuration.json   # 範例設定檔
+├── src/                      # 原始碼目錄
+│   ├── experiment.py         # 實驗執行器
+│   ├── logger.py             # 日誌管理模組
+│   ├── topology.py           # 拓撲管理模組
+│   ├── algorithm.py          # 演算法管理模組
+│   ├── traffic.py            # 流量管理模組
+│   ├── config.py             # 設定管理模組
+│   └── failure.py            # 故障管理模組
+└── README.md                 # 說明文件
 ```
 
-## Module Functions
+## 模組功能說明
 
-### 1. Configuration Management (config.py)
-- Read and manage JSON configuration files
-- File operation utility functions
-- System management functions
+### 1. 設定管理（config.py）
+- 讀取與管理 JSON 設定檔
+- 檔案操作
 
-### 2. Log Management (logger.py)
-- Unified logging interface
-- Support for timestamps and status recording
-- File log output
+### 2. 日誌管理（logger.py）
+- 支援時間與狀態記錄
+- 檔案日誌輸出
 
-### 3. Topology Management (topology.py)
-- Mininet network topology construction
-- Host and switch management
-- Connection status checking
+### 3. 拓撲管理（topology.py）
+- Mininet 網路拓撲建構
+- 主機與交換器管理
+- 連線狀態檢查
 
-### 4. Algorithm Management (algorithm.py)
-- Failure recovery algorithm deployment
-- ONOS application management
-- Algorithm status monitoring
+### 4. 演算法管理（algorithm.py）
+- 故障恢復演算法
 
-### 5. Traffic Management (traffic.py)
-- iperf traffic generation
-- Traffic monitoring and data collection
-- Process management
+### 5. 流量管理（traffic.py）
+- iperf 流量產生
+- 流量監控與資料收集
 
-### 6. Failure Management (failure.py)
-- Link failure simulation
-- Failure detection and recovery
-- Data analysis
+### 6. 故障管理（failure.py）
+- 連結故障模擬
+- 故障偵測與恢復
 
-### 7. Experiment Runner (experiment.py)
-- Integrate all module functions
-- Experiment flow control
-- Result management
+### 7. 實驗執行器（experiment.py）
+- 整合所有模組功能
+- 實驗流程控制
 
-## Usage
+## 使用方式
 
-### 1. Configuration File Setup
+### 1. 設定檔建立
 
-Create a configuration file in the `config/` directory, for example `configuration.json`:
+請在 `config/` 目錄下建立設定檔，例如 `configuration.json`：
 
 ```json
 {
@@ -69,6 +62,7 @@ Create a configuration file in the `config/` directory, for example `configurati
     "OutputFile": "single_link_failure_result_data.pkl",
     "SaveTraceFile": "True",
     "FailureMode": "single",
+    "Mode": "fixed",
     "Algorithm": ["SDFFR_MP", "SDFFR_MP_LB"],
     "Vertex": [20],
     "Edge": [35],
@@ -83,58 +77,51 @@ Create a configuration file in the `config/` directory, for example `configurati
 }
 ```
 
-### 2. Running Experiments
+### 2. 執行實驗
 
 ```bash
-# Run experiment
+# 執行實驗
 python3 main.py run configuration1
 
-# Clean experiment environment
+# 清理實驗環境
 python3 main.py clean configuration1
 ```
 
-### 3. Parameter Description
 
-- `mode`: Run mode
-  - `run`: Run experiment
-  - `clean`: Clean experiment environment
-- `config_file`: Configuration file name (without .json extension)
+### 3. 設定參數說明
 
-### 4. Configuration Parameters
+- `UserName`: 使用者名稱
+- `FailureMode`: 故障模式（single/multiple）
+- `Mode`: 遮擋模式 (markov/fixed)
+- `Algorithm`: 測試的演算法列表
+- `Vertex`: 節點數量
+- `Edge`: 連結數量
+- `LinkBandwidth`: 連結頻寬
+- `Throughput`: 流量吞吐量
+- `TrafficModel`: 流量模型
+- `ControlPlaneDelay`: 控制平面延遲
+- `FlowCount`: 流數量
+- `Trial`: 實驗次數範圍
+- `LinkChangeTime`: 連結變動時間間隔
+- `Metric`: 評估指標
 
-- `UserName`: Username
-- `FailureMode`: Failure mode (single/multiple)
-- `Algorithm`: List of algorithms to test
-- `Vertex`: Number of nodes
-- `Edge`: Number of links
-- `LinkBandwidth`: Link bandwidth
-- `Throughput`: Traffic throughput
-- `TrafficModel`: Traffic model
-- `ControlPlaneDelay`: Control plane delay
-- `FlowCount`: Number of flows
-- `Trial`: Experiment trial range
-- `LinkChangeTime`: Link change time interval
-- `Metric`: Evaluation metrics
+## 實驗流程
 
-## Experiment Process
+1. **環境建置**：初始化實驗環境與目錄結構
+2. **拓撲建構**：建立 Mininet 網路拓撲
+3. **演算法部署**：在 ONOS 控制器上部署故障恢復演算法
+4. **流量產生**：使用 iperf 產生測試流量
+5. **故障注入**：模擬連結故障與恢復
+6. **資料收集**：收集效能指標與日誌
+7. **結果分析**：分析實驗結果並儲存
 
-1. **Environment Setup**: Initialize experiment environment and directory structure
-2. **Topology Construction**: Create Mininet network topology
-3. **Algorithm Deployment**: Deploy failure recovery algorithms on ONOS controller
-4. **Traffic Generation**: Generate test traffic using iperf
-5. **Failure Injection**: Simulate link failures and recovery
-6. **Data Collection**: Collect performance metrics and logs
-7. **Result Analysis**: Analyze experiment results and save
+## 注意事項
 
-## Notes
+1. 請確保已安裝 Mininet、ONOS 及其他相依套件
+2. 執行時需有 sudo 權限
+3. 請確認網路環境已正確設定
+4. 實驗前請備份重要資料
 
-1. Ensure Mininet, ONOS and other dependencies are installed
-2. Requires sudo privileges to run
-3. Ensure network environment is properly configured
-4. Please backup important data before experiments
-
-## Troubleshooting
-
-- If experiments fail, check log files
-- Ensure all dependent services are running normally
-- Check network configuration and permission settings 
+## 代辦清單
+1. ONOS GUI 沒有看到節點加入，演算法沒有順利執行
+2. 沒有產出 log 檔
